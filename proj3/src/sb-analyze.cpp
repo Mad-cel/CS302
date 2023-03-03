@@ -130,6 +130,9 @@ void analyze_board(Superball *s ){
 
     //Go through all the index
   }
+
+  for (int i = 0; i < (int)s->board.size(); i++)  set->Find(i);
+
   //a placeholder for goal since goal only have 0 and 1 
   map<int, int> g;
   //map<int, int>::iterator it;
