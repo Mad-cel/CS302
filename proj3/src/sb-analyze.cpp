@@ -101,7 +101,7 @@ void analyze_board(Superball *s ){
     //check right  
     if (i + 1 < s->board.size()){
       //check if at end
-       if (tolower(s->board[i]) == tolower(s->board[i+1])){
+       if (tolower((char)s->board[i]) == tolower((char)s->board[i+1])){
         
         if (set->Find(i+1) == set->Find(i))   continue;
         set->Find( set->Union(set->Find(i), set->Find(i+1)) );
@@ -111,7 +111,7 @@ void analyze_board(Superball *s ){
     //check top
     if (i - s->c >= 0){
       //check if top row
-      if (tolower(s->board[i]) == tolower(s->board[i- s->c])){
+      if (tolower((char)s->board[i]) == tolower((char)s->board[i- s->c])){
         if (set->Find(i) == set->Find(i - s->c))  continue;
 
         set->Find( set->Union(set->Find(i), set->Find(i - s->c)) );
@@ -121,7 +121,7 @@ void analyze_board(Superball *s ){
     //check bottom 
     if (i + s->c < (int)s->board.size()){
       //check if bottom row
-      if ((tolower(s->board[i])) == tolower(s->board[i + s->c])){
+      if ((tolower((char)s->board[i])) == tolower((char)s->board[i + s->c])){
         if (set->Find(i) == set->Find(i + s->c))  continue;
 
         set->Find( set->Union(set->Find(i), set->Find(i + s->c)) );
