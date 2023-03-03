@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 #include "disjoint.h"
+#include "disjoint_set.hpp"
 using namespace std;
 //using plank::Disjoint_Set
 
