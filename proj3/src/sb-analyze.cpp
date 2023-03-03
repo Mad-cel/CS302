@@ -4,6 +4,7 @@
 #include <ctype.h>
 #include <iostream>
 #include <vector>
+#include <map>
 #include "disjoint.h"
 using namespace std;
 
@@ -89,15 +90,82 @@ void analyze_board(Superball *s ){
     
     //check left
     if (i - 1 >= 0){
+      //checlk if at start 
       if ( (tolower( (char)s->board[i] )) == tolower( (char)s->board[i-1] )){
         
         if (set->Find(i-1) == set->Find(i))   continue;
-        set->Union(set->Find(i), set->Find(i-1));
+        set->Find( set->Union(set->Find(i), set->Find(i-1)) );
       }
     }
 
-    if (i + 1 <= s->r)
+    //check right  
+    if (i + 1 < s->board.size()){
+      //check if at end
+       if (tolower(s->board[i]) == tolower(s->board[i+1])){
+        
+        if (set->Find(i+1) == set->Find(i))   continue;
+        set->Find( set->Union(set->Find(i), set->Find(i+1)) );
+       }
+    }
+
+    //check top
+    if (i - s->c >= 0){
+      //check if top row
+      if (tolower(s->board[i]) == tolower(s->board[i- s->c])){
+        if (set->Find(i) == set->Find(i - s->c))  continue;
+
+        set->Find( set->Union(set->Find(i), set->Find(i - s->c)) );
+      } 
+    }
+
+    //check bottom 
+    if (i + s->c < (int)s->board.size()){
+      //check if bottom row
+      if ((tolower(s->board[i])) == tolower(s->board[i + s->c])){
+        if (set->Find(i) == set->Find(i + s->c))  continue;
+
+        set->Find( set->Union(set->Find(i), set->Find(i + s->c)) );
+      }
+    }
+
+    //Go through all the index
   }
+  //a placeholder for goal since goal only have 0 and 1 
+  map<int, int> g;
+  //map<int, int>::iterator it;
+  int score_set = 0;
+  for (int i = 0; i < (int)s->goals.size(); i++){
+    
+    if (s->goals[i])  //if something exist at goal 
+    //At the current index which ontain parents and not previous connected to other set 
+      if (set->Find(i) != -1 && g.find(set->Find(i)) == g.end())  g.insert(pair<int, int>(set->Find(i), i));
+
+  }
+
+  for (auto it : g ){
+    int ct = 0;
+    
+    //if empty
+    if (s->board[it.first] == '*')  continue;
+    
+    for (int i = 0; i < (int)s->board.size(); i++)
+      if (set->Find(i) == it.first)  ct++;
+
+    if (ct >= s->mss){
+      if (score_set == 0){
+        score_set = 1;
+        cout << "Scoring sets: " << endl;
+      }
+
+      cout << "   Size: " << ct << "Char: " << (char)s->board[it.first] << "Scoring Cell: " << 
+        (it.second) / (s->c) << "," << (it.second) % (s->c) << endl;
+    }  
+
+  }
+
+  delete set;
+
+
 }
 
 main(int argc, char **argv)
