@@ -7,6 +7,7 @@
 #include <map>
 #include "disjoint.h"
 using namespace std;
+//using plank::Disjoint_Set
 
 #define talloc(type, num) (type *) malloc(sizeof(type)*(num))
 
@@ -99,7 +100,7 @@ void analyze_board(Superball *s ){
     }
 
     //check right  
-    if (i + 1 < s->board.size()){
+    if (i + 1 < (int)s->board.size()){
       //check if at end
        if (tolower((char)s->board[i]) == tolower((char)s->board[i+1])){
         
@@ -135,7 +136,7 @@ void analyze_board(Superball *s ){
 
   //a placeholder for goal since goal only have 0 and 1 
   map<int, int> g;
-  //map<int, int>::iterator it;
+  map<int, int>::iterator it;
   int score_set = 0;
   for (int i = 0; i < (int)s->goals.size(); i++){
     
@@ -145,14 +146,14 @@ void analyze_board(Superball *s ){
 
   }
 
-  for (auto it : g ){
+  for (it = g.begin(); it != g.end(); ++it){
     int ct = 0;
     
     //if empty
-    if (s->board[it.first] == '*')  continue;
+    if (s->board[it->first] == '*')  continue;
     
     for (int i = 0; i < (int)s->board.size(); i++)
-      if (set->Find(i) == it.first)  ct++;
+      if (set->Find(i) == it->first)  ct++;
 
     if (ct >= s->mss){
       if (score_set == 0){
@@ -160,8 +161,8 @@ void analyze_board(Superball *s ){
         cout << "Scoring sets: " << endl;
       }
 
-      cout << "   Size: " << ct << "Char: " << (char)s->board[it.first] << "Scoring Cell: " << 
-        (it.second) / (s->c) << "," << (it.second) % (s->c) << endl;
+      cout << "   Size: " << ct << "Char: " << (char)s->board[it->first] << "Scoring Cell: " << 
+        (it->second) / (s->c) << "," << (it->second) % (s->c) << endl;
     }  
 
   }
@@ -171,7 +172,7 @@ void analyze_board(Superball *s ){
 
 }
 
-main(int argc, char **argv)
+int main(int argc, char **argv)
 {
   Superball *s;
  

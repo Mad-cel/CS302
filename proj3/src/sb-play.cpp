@@ -6,6 +6,7 @@
 #include <vector>
 #include "disjoint.h"
 using namespace std;
+//using plank::Disjoint_Set
 
 #define talloc(type, num) (type *) malloc(sizeof(type)*(num))
 
