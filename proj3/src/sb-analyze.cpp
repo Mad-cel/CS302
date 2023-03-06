@@ -9,7 +9,7 @@
 #include "disjoint_set.hpp"
 using namespace std;
 using plank::Disjoint_Set;
-
+//works
 #define talloc(type, num) (type *) malloc(sizeof(type)*(num))
 
 class Superball {
